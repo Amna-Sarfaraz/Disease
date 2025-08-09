@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>CKD Prediction</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+    body {
+      background-color: #a1caf1; /* soft blue */
+      font-family: 'Poppins', sans-serif;
+      color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      padding: 30px;
+      margin: 0;
+    }
+
+    .container {
+      background-color: #c2dfff; /* lighter blue */
+      border: 4px solid #6d9bf1;
+      border-radius: 25px;
+      padding: 30px 40px;
+      width: 420px;
+      box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .logo {
+      width: 200px;
+      margin-bottom: 15px;
+    }
+
+    h1 {
+      font-weight: 700;
+      font-size: 24px;
+      color: #2c3e50;
+      margin-bottom: 25px;
+      text-shadow: 1px 1px 2px #7f8c8d;
+    }
+
+    form {
+      text-align: left;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 12px;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    input[type="number"] {
+      width: 100%;
+      padding: 7px 10px;
+      border-radius: 6px;
+      border: 1.5px solid #6d9bf1;
+      font-size: 14px;
+      box-sizing: border-box;
+      transition: border-color 0.3s ease;
+    }
+
+    input[type="number"]:focus {
+      border-color: #2c3e50;
+      outline: none;
+    }
+
+    button {
+      background-color: #2c3e50;
+      color: white;
+      font-weight: 700;
+      padding: 12px 0;
+      width: 100%;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 20px;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #1a2533;
+    }
+
+    .result {
+      margin-top: 25px;
+      padding: 15px;
+      background-color: #f0f4f8;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 20px;
+      color: #2c3e50;
+      box-shadow: 1px 1px 8px rgba(44, 62, 80, 0.2);
+    }
+
+    .note {
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 20px;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="{{ url_for('static', filename='download.png') }}" alt="Logo" class="logo" />
+    <h1>Chronic Kidney Disease Prediction</h1>
+
+    <p class="note">
+      Note: For inputs marked with [0/1], <strong>0 = No</strong>, <strong>1 = Yes</strong>.
+    </p>
+
+    <form method="POST" action="/">
+      <label>Age: <input name="age" type="number" step="any" required value="{{ request.form.age }}"></label>
+      <label>Blood Pressure (bp): <input name="bp" type="number" step="any" required value="{{ request.form.bp }}"></label>
+      <label>Specific Gravity (sg): <input name="sg" type="number" step="any" required value="{{ request.form.sg }}"></label>
+      <label>Albumin (al): <input name="al" type="number" step="any" required value="{{ request.form.al }}"></label>
+      <label>Sugar (su): <input name="su" type="number" step="any" required value="{{ request.form.su }}"></label>
+      <label>Blood Glucose Random (bgr): <input name="bgr" type="number" step="any" required value="{{ request.form.bgr }}"></label>
+      <label>Blood Urea (bu): <input name="bu" type="number" step="any" required value="{{ request.form.bu }}"></label>
+      <label>Serum Creatinine (sc): <input name="sc" type="number" step="any" required value="{{ request.form.sc }}"></label>
+      <label>Sodium (sod): <input name="sod" type="number" step="any" required value="{{ request.form.sod }}"></label>
+      <label>Potassium (pot): <input name="pot" type="number" step="any" required value="{{ request.form.pot }}"></label>
+      <label>Hemoglobin (hemo): <input name="hemo" type="number" step="any" required value="{{ request.form.hemo }}"></label>
+      <label>PCV: <input name="pcv" type="number" step="any" required value="{{ request.form.pcv }}"></label>
+      <label>WBC count (wc): <input name="wc" type="number" step="any" required value="{{ request.form.wc }}"></label>
+      <label>RBC count (rc): <input name="rc" type="number" step="any" required value="{{ request.form.rc }}"></label>
+      <label>BMI: <input name="BMI" type="number" step="any" required value="{{ request.form.BMI }}"></label>
+
+      <label>RBC (rbc) [0/1]: <input name="rbc" type="number" min="0" max="1" required value="{{ request.form.rbc }}"></label>
+      <label>PC (pc) [0/1]: <input name="pc" type="number" min="0" max="1" required value="{{ request.form.pc }}"></label>
+      <label>PCC (pcc) [0/1]: <input name="pcc" type="number" min="0" max="1" required value="{{ request.form.pcc }}"></label>
+      <label>BA (ba) [0/1]: <input name="ba" type="number" min="0" max="1" required value="{{ request.form.ba }}"></label>
+      <label>HTN (htn) [0/1]: <input name="htn" type="number" min="0" max="1" required value="{{ request.form.htn }}"></label>
+      <label>DM (dm) [0/1]: <input name="dm" type="number" min="0" max="1" required value="{{ request.form.dm }}"></label>
+      <label>CAD (cad) [0/1]: <input name="cad" type="number" min="0" max="1" required value="{{ request.form.cad }}"></label>
+      <label>Appetite (appet) [0/1]: <input name="appet" type="number" min="0" max="1" required value="{{ request.form.appet }}"></label>
+      <label>PE (pe) [0/1]: <input name="pe" type="number" min="0" max="1" required value="{{ request.form.pe }}"></label>
+      <label>Anaemia (ane) [0/1]: <input name="ane" type="number" min="0" max="1" required value="{{ request.form.ane }}"></label>
+
+      <button type="submit">Predict</button>
+    </form>
+
+    {% if result %}
+      <div class="result">Prediction Result: <strong>{{ result }}</strong></div>
+    {% endif %}
+  </div>
+</body>
+</html>
